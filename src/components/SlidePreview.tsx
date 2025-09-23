@@ -19,7 +19,7 @@ interface SlidePreviewProps {
 }
 
 export function SlidePreview({ slide, index }: SlidePreviewProps) {
-  const [isCodeOpen, setIsCodeOpen] = useState(false);
+  const [showCode, setShowCode] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const handleCopyCode = async () => {
@@ -43,45 +43,46 @@ export function SlidePreview({ slide, index }: SlidePreviewProps) {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => setIsCodeOpen(!isCodeOpen)}
+            onClick={() => setShowCode(!showCode)}
             className="shrink-0"
           >
             <Code2 className="h-4 w-4 mr-2" />
-            View Code
+            {showCode ? "View Design" : "View Code"}
           </Button>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {/* Slide Preview */}
-        <div className="space-y-4">
-          <div className="aspect-video bg-gradient-card border border-border rounded-lg p-6 flex items-center justify-center">
-            <div className="text-center space-y-4 max-w-md">
-              <h3 className="text-xl font-semibold text-card-foreground">
-                {slide.title}
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                {slide.content}
-              </p>
-              <div className="flex items-center justify-center text-muted-foreground">
-                <ImageIcon className="h-6 w-6" />
-                <span className="ml-2 text-xs">Image placeholder</span>
+        {/* Toggle between Design and Code View */}
+        {!showCode ? (
+          /* Design Preview */
+          <div className="space-y-4">
+            <div className="aspect-video bg-gradient-card border border-border rounded-lg p-6 flex items-center justify-center">
+              <div className="text-center space-y-4 max-w-md">
+                <h3 className="text-xl font-semibold text-card-foreground">
+                  {slide.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {slide.content}
+                </p>
+                <div className="flex items-center justify-center text-muted-foreground">
+                  <ImageIcon className="h-6 w-6" />
+                  <span className="ml-2 text-xs">Image placeholder</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Content Preview */}
-          <div className="space-y-2">
-            <h4 className="font-medium text-sm">Content</h4>
-            <p className="text-sm text-muted-foreground leading-relaxed bg-muted/50 p-3 rounded">
-              {slide.content}
-            </p>
+            {/* Content Preview */}
+            <div className="space-y-2">
+              <h4 className="font-medium text-sm">Content</h4>
+              <p className="text-sm text-muted-foreground leading-relaxed bg-muted/50 p-3 rounded">
+                {slide.content}
+              </p>
+            </div>
           </div>
-        </div>
-
-        {/* Code View */}
-        <Collapsible open={isCodeOpen} onOpenChange={setIsCodeOpen}>
-          <CollapsibleContent className="space-y-3">
+        ) : (
+          /* Code View */
+          <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h4 className="font-medium text-sm flex items-center gap-2">
                 <Code2 className="h-4 w-4" />
@@ -104,14 +105,14 @@ export function SlidePreview({ slide, index }: SlidePreviewProps) {
               </Button>
             </div>
             <div className="relative">
-              <pre className="bg-muted p-4 rounded-lg text-xs overflow-x-auto border">
+              <pre className="bg-muted p-4 rounded-lg text-xs overflow-x-auto border min-h-[200px]">
                 <code className="text-muted-foreground">
                   {slide.code}
                 </code>
               </pre>
             </div>
-          </CollapsibleContent>
-        </Collapsible>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
@@ -13,16 +14,47 @@ import {
   Download,
   Sparkles,
   Layout,
-  Presentation
+  Presentation,
+  Hash
 } from "lucide-react";
 
 const templates = [
-  { value: "simple", label: "Simple", description: "Clean and minimal" },
-  { value: "modern", label: "Modern", description: "Contemporary design" },
-  { value: "dark", label: "Dark", description: "Professional dark theme" },
-  { value: "minimalistic", label: "Minimalistic", description: "Less is more" },
-  { value: "business", label: "Business", description: "Corporate style" },
-  { value: "creative", label: "Creative", description: "Bold and artistic" },
+  { 
+    value: "simple", 
+    label: "Simple", 
+    description: "Clean and minimal",
+    preview: "bg-white border border-gray-200 text-gray-800"
+  },
+  { 
+    value: "modern", 
+    label: "Modern", 
+    description: "Contemporary design",
+    preview: "bg-gradient-to-br from-blue-500 to-purple-600 text-white"
+  },
+  { 
+    value: "dark", 
+    label: "Dark", 
+    description: "Professional dark theme",
+    preview: "bg-gray-900 text-white border border-gray-700"
+  },
+  { 
+    value: "minimalistic", 
+    label: "Minimalistic", 
+    description: "Less is more",
+    preview: "bg-gray-50 text-gray-900 border border-gray-100"
+  },
+  { 
+    value: "business", 
+    label: "Business", 
+    description: "Corporate style",
+    preview: "bg-gradient-to-r from-slate-700 to-slate-800 text-white"
+  },
+  { 
+    value: "creative", 
+    label: "Creative", 
+    description: "Bold and artistic",
+    preview: "bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 text-white"
+  },
 ];
 
 // Mock slide data for demo
@@ -70,6 +102,7 @@ const mockSlides = [
 export function PresentationMaker() {
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [prompt, setPrompt] = useState("");
+  const [slideCount, setSlideCount] = useState(3);
   const [slides, setSlides] = useState<typeof mockSlides>([]);
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -130,6 +163,37 @@ export function PresentationMaker() {
                 ))}
               </SelectContent>
             </Select>
+            
+            {/* Template Preview */}
+            {selectedTemplate && (
+              <div className="space-y-2">
+                <Label className="text-xs text-muted-foreground">Preview</Label>
+                <div className={`h-16 rounded-md p-3 flex items-center justify-center text-xs font-medium ${templates.find(t => t.value === selectedTemplate)?.preview}`}>
+                  Sample Slide
+                </div>
+              </div>
+            )}
+          </div>
+
+          <Separator />
+
+          {/* Slide Count */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-2">
+              <Hash className="h-4 w-4 text-muted-foreground" />
+              <Label className="font-medium">Number of Slides</Label>
+            </div>
+            <Input
+              type="number"
+              min="1"
+              max="20"
+              value={slideCount}
+              onChange={(e) => setSlideCount(parseInt(e.target.value) || 1)}
+              className="w-full"
+            />
+            <div className="text-xs text-muted-foreground">
+              Choose between 1-20 slides for your presentation.
+            </div>
           </div>
 
           <Separator />
