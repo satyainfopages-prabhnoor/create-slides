@@ -23,37 +23,83 @@ const templates = [
     value: "simple", 
     label: "Simple", 
     description: "Clean and minimal",
-    preview: "bg-white border border-gray-200 text-gray-800"
+    preview: (
+      <div className="h-20 bg-white border border-gray-200 p-3 flex flex-col justify-between text-gray-800 rounded-md">
+        <div className="text-[11px] font-semibold text-center">Your Presentation Title</div>
+        <div className="text-[8px] text-center text-gray-600">Subtitle goes here</div>
+        <div className="border-t border-gray-200 pt-1">
+          <div className="w-full h-1 bg-gray-100 rounded"></div>
+        </div>
+      </div>
+    )
   },
   { 
     value: "modern", 
     label: "Modern", 
     description: "Contemporary design",
-    preview: "bg-gradient-to-br from-blue-500 to-purple-600 text-white"
+    preview: (
+      <div className="h-20 bg-gradient-to-br from-blue-500 to-purple-600 text-white p-3 flex flex-col rounded-md relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-8 h-8 bg-white/20 rounded-full -mr-4 -mt-4"></div>
+        <div className="text-[11px] font-bold">MODERN DESIGN</div>
+        <div className="text-[8px] opacity-90 mt-auto">Clean • Contemporary • Professional</div>
+      </div>
+    )
   },
   { 
     value: "dark", 
     label: "Dark", 
     description: "Professional dark theme",
-    preview: "bg-gray-900 text-white border border-gray-700"
+    preview: (
+      <div className="h-20 bg-gray-900 text-white border border-gray-700 p-3 flex flex-col justify-center rounded-md relative">
+        <div className="absolute top-2 left-2 w-2 h-2 bg-green-500 rounded-full"></div>
+        <div className="text-[11px] font-mono font-semibold text-center">$ presentation --theme=dark</div>
+        <div className="text-[8px] text-center text-gray-400 mt-1">Professional & Technical</div>
+      </div>
+    )
   },
   { 
     value: "minimalistic", 
     label: "Minimalistic", 
     description: "Less is more",
-    preview: "bg-gray-50 text-gray-900 border border-gray-100"
+    preview: (
+      <div className="h-20 bg-gray-50 text-gray-900 border border-gray-100 p-3 flex items-center justify-center rounded-md">
+        <div className="text-center">
+          <div className="text-[10px] font-light tracking-wide">PRESENTATION</div>
+          <div className="w-6 h-[1px] bg-gray-400 mx-auto my-1"></div>
+          <div className="text-[8px] text-gray-600">minimalist approach</div>
+        </div>
+      </div>
+    )
   },
   { 
     value: "business", 
     label: "Business", 
     description: "Corporate style",
-    preview: "bg-gradient-to-r from-slate-700 to-slate-800 text-white"
+    preview: (
+      <div className="h-20 bg-gradient-to-r from-slate-700 to-slate-800 text-white p-3 flex flex-col rounded-md">
+        <div className="flex items-center justify-between">
+          <div className="text-[10px] font-semibold">COMPANY NAME</div>
+          <div className="w-3 h-3 bg-blue-500 rounded-sm"></div>
+        </div>
+        <div className="text-[11px] font-bold mt-auto">Business Presentation</div>
+        <div className="text-[8px] opacity-75">Q4 2024 Results</div>
+      </div>
+    )
   },
   { 
     value: "creative", 
     label: "Creative", 
     description: "Bold and artistic",
-    preview: "bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 text-white"
+    preview: (
+      <div className="h-20 bg-gradient-to-br from-pink-500 via-red-500 to-yellow-500 text-white p-3 flex flex-col rounded-md relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="relative z-10">
+          <div className="text-[12px] font-black transform -rotate-2">CREATIVE</div>
+          <div className="text-[8px] font-light mt-auto">Think Outside the Box</div>
+        </div>
+        <div className="absolute bottom-0 right-0 w-6 h-6 bg-white/30 rounded-full -mr-2 -mb-2"></div>
+      </div>
+    )
   },
 ];
 
@@ -168,10 +214,7 @@ export function PresentationMaker() {
             {selectedTemplate && (
               <div className="space-y-2">
                 <Label className="text-xs text-muted-foreground">Preview</Label>
-                <div className={`h-20 rounded-md p-3 flex flex-col justify-center text-xs ${templates.find(t => t.value === selectedTemplate)?.preview}`}>
-                  <div className="font-semibold mb-1">Your Title Here</div>
-                  <div className="opacity-75 text-[10px]">Your subtitle or description</div>
-                </div>
+                {templates.find(t => t.value === selectedTemplate)?.preview}
               </div>
             )}
           </div>
