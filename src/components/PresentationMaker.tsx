@@ -168,8 +168,9 @@ export function PresentationMaker() {
             {selectedTemplate && (
               <div className="space-y-2">
                 <Label className="text-xs text-muted-foreground">Preview</Label>
-                <div className={`h-16 rounded-md p-3 flex items-center justify-center text-xs font-medium ${templates.find(t => t.value === selectedTemplate)?.preview}`}>
-                  Sample Slide
+                <div className={`h-20 rounded-md p-3 flex flex-col justify-center text-xs ${templates.find(t => t.value === selectedTemplate)?.preview}`}>
+                  <div className="font-semibold mb-1">Your Title Here</div>
+                  <div className="opacity-75 text-[10px]">Your subtitle or description</div>
                 </div>
               </div>
             )}
